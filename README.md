@@ -31,7 +31,7 @@ Everything stays on your Mac (`~/Library/Application Support/JobPilot`). There's
 
 ## Review-first
 
-JobPilot never submits an application for you, never invents employers, dates, titles or numbers, never answers work authorization, sponsorship, self-identification or legal questions you haven't answered yourself, and never automates LinkedIn or solves CAPTCHAs.
+JobPilot never submits an application for you unless you turn on Auto-submit in Settings (off until you agree to it; at most 10 a day, one per role, each board's confirmation kept). It never invents employers, dates, titles or numbers, never answers work authorization, sponsorship, self-identification or legal questions you haven't answered yourself, and never automates LinkedIn or solves CAPTCHAs.
 
 ## License
 

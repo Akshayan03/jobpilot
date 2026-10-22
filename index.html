@@ -116,7 +116,7 @@
   <main>
     <div class="wrap hero">
       <div>
-        <span class="eyebrow"><b>New</b> JobPilot <span class="ver" data-version>3.3</span> for Mac</span>
+        <span class="eyebrow"><b>New</b> JobPilot <span class="ver" data-version>3.4</span> for Mac</span>
         <h1>Tailored applications, written from <em>your real experience</em>.</h1>
         <p class="lead">Paste a job link. JobPilot checks whether you fit, writes a one-page resume and a cover letter for that job from your own facts, fills in the application, and stops so you can read it and press Submit yourself.</p>
         <div class="cta">
@@ -160,9 +160,9 @@
         <div class="promise">
           <h2>The review-first promise</h2>
           <ul>
-            <li><span><b>Nothing is submitted for you.</b> JobPilot fills a form and stops. You read it and press Submit on the site.</span></li>
+            <li><span><b>Nothing is submitted for you, unless you ask.</b> JobPilot fills a form and stops; you read it and press Submit on the site. Auto-submit is off until you turn it on in Settings and agree to what it does; then it sends at most 10 a day, one per role, and keeps each board's confirmation.</span></li>
             <li><span><b>Nothing is invented.</b> No employers, dates or titles you didn't have; no level words added; only your numbers. A number you marked as an estimate needs your OK on every application.</span></li>
-            <li><span><b>Legal questions are yours.</b> Work authorization, sponsorship, self-identification and pay come only from what you enter. Consent boxes, certifications and signatures are never touched.</span></li>
+            <li><span><b>Legal questions are yours.</b> Work authorization, sponsorship, self-identification and pay come only from what you enter. Consent boxes and certifications are left to you (Auto-submit ticks them only with your consent); signatures are never typed for you.</span></li>
             <li><span><b>No shortcuts.</b> No LinkedIn automation, no CAPTCHA solving, no mass-applying.</span></li>
           </ul>
         </div>
@@ -187,7 +187,7 @@
             <div class="hash" data-hash>SHA-256 in the release notes</div>
           </div>
         </div>
-        <p class="fine" style="margin-top:14px">Version <span data-version>3.3.0</span> · <a href="https://github.com/Akshayan03/jobpilot/releases">all releases and checksums</a> · Windows isn't available yet.</p>
+        <p class="fine" style="margin-top:14px">Version <span data-version>3.4.2</span> · <a href="https://github.com/Akshayan03/jobpilot/releases">all releases and checksums</a> · Windows isn't available yet.</p>
       </div>
     </section>
 
@@ -234,7 +234,7 @@
       <div class="wrap">
         <h2>Questions</h2>
         <details><summary>Where does my data go?</summary><p>Everything stays on your Mac, in <span class="mono">~/Library/Application Support/JobPilot</span>: your profile, answers, resumes, letters and applications. There's no JobPilot server, account or analytics. To write, JobPilot sends the relevant facts and the posting to Claude through Claude Code on your Mac, under your own Claude account and Anthropic's terms, the same as when you use Claude yourself. Job boards are read from their public APIs.</p></details>
-        <details><summary>Does it apply to jobs for me?</summary><p>No. It prepares each application and fills the form, then stops. You read every field (anything it drafted is highlighted), answer legal acknowledgements yourself, and press Submit on the company's site.</p></details>
+        <details><summary>Does it apply to jobs for me?</summary><p>Not unless you turn on Auto-submit. By default it prepares each application and fills the form, then stops: you read every field (anything it drafted is highlighted), answer legal acknowledgements yourself, and press Submit on the company's site. With Auto-submit on (Settings, after a consent step), it submits the applications that are ready, ticks their consent boxes, waits for each board's confirmation and keeps a screenshot of it: at most 10 a day, a few minutes apart, never the same role twice. It still never solves a CAPTCHA, uses LinkedIn, guesses your work authorization, sponsorship or self-identification, types a signature, pays or creates accounts; those wait for you.</p></details>
         <details><summary>Will it make things up on my resume?</summary><p>No. Titles, employers and dates are printed exactly as in your profile, numbers only as you wrote them, and a skill your facts don't back is flagged for you to confirm or remove. If a posting asks for something you don't have, it shows up as a gap, not as a claim.</p></details>
         <details><summary>What does it cost?</summary><p>JobPilot is free. Its writing uses your Claude subscription's usage, like chatting with Claude does. A Pro plan is enough for a few applications a day; Max gives more room.</p></details>
         <details><summary>Why does macOS warn me when I first open it?</summary><p>Apple notarization needs a paid developer account, which this hobby project doesn't have. The app is signed (ad hoc) but not notarized, so macOS asks you to confirm once. You can check the download against the SHA-256 on the release page.</p></details>
