@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JobPilot | Tailored applications, written from your real experience</title>
+  <meta name="description" content="A Mac app that reads a job posting, checks your fit, writes a tailored one-page resume and cover letter from your real experience, fills in the application, and stops for you to review and submit. Runs on your own Claude subscription. Everything stays on your Mac." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://akshayan03.github.io/jobpilot/" />
+  <meta property="og:title" content="JobPilot | Tailored applications, written from your real experience" />
+  <meta property="og:description" content="Paste a job link. Get a tailored resume, a cover letter and a pre-filled application, and submit it yourself. Mac app; runs on your Claude subscription." />
+  <meta property="og:image" content="https://akshayan03.github.io/jobpilot/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/icon-256.png" sizes="256x256" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icon-256.png" />
+  <meta name="theme-color" content="#0d0e11" />
+  <style>
+    :root {
+      --bg: #0b0c0f; --panel: #14151a; --panel-2: #1b1c23; --line: rgba(255, 255, 255, .08); --line-2: rgba(255, 255, 255, .14);
+      --text: #f2f2f5; --muted: #a9abb6; --dim: #7d7f8a; --accent: #8b7dff; --good: #4fd18b; --warn: #f2b44c;
+      --brand: linear-gradient(135deg, #7c6dff 0%, #a26bff 60%, #e97bd0 100%);
+      --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Inter, Roboto, sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: radial-gradient(1100px 600px at 15% -10%, rgba(124, 109, 255, .18), transparent), radial-gradient(900px 520px at 105% 20%, rgba(233, 123, 208, .09), transparent), var(--bg); color: var(--text); font: 400 16px/1.6 var(--body); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    code, .mono { font-family: var(--mono); font-size: .9em; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar { position: sticky; top: 0; z-index: 20; background: rgba(11, 12, 15, .76); backdrop-filter: blur(18px) saturate(150%); border-bottom: 1px solid var(--line); }
+    nav { height: 66px; display: flex; align-items: center; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 750; letter-spacing: -.02em; text-decoration: none; font-size: 18px; }
+    .brand img { width: 30px; height: 30px; }
+    .navlinks { display: flex; gap: 24px; margin-left: 12px; }
+    .navlinks a { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .navlinks a:hover { color: var(--text); }
+    .btn { display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .06); transition: transform .15s, background .15s; cursor: pointer; color: var(--text); }
+    .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, .1); }
+    .btn.primary { background: var(--brand); border-color: transparent; box-shadow: 0 10px 30px -10px rgba(124, 109, 255, .8); }
+    .btn small { font-weight: 500; opacity: .85; }
+    nav .btn { margin-left: auto; padding: 9px 14px; font-size: 14px; }
+    .hero { padding: 84px 0 40px; display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted); font-size: 13px; }
+    .eyebrow b { color: var(--text); }
+    h1 { font-size: clamp(38px, 5vw, 60px); line-height: 1.04; letter-spacing: -.045em; margin: 18px 0 18px; }
+    h1 em { font-style: normal; background: var(--brand); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { color: var(--muted); font-size: 18px; max-width: 34em; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 14px; }
+    .fine { color: var(--dim); font-size: 13px; }
+    .shot { border-radius: 16px; border: 1px solid var(--line-2); box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .8), 0 0 0 1px rgba(255, 255, 255, .03); overflow: hidden; background: var(--panel); }
+    section { padding: 72px 0; }
+    h2 { font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.035em; line-height: 1.1; margin: 0 0 14px; }
+    .sub { color: var(--muted); max-width: 46em; margin: 0 0 36px; font-size: 17px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .card h3 { margin: 0 0 6px; font-size: 17px; letter-spacing: -.01em; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(139, 125, 255, .14); color: var(--accent); margin-bottom: 14px; font-size: 17px; }
+    .steps { counter-reset: s; display: grid; gap: 14px; }
+    .step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+    .step::before { counter-increment: s; content: counter(s); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--brand); font-weight: 800; }
+    .step h3 { margin: 4px 0 4px; font-size: 17px; }
+    .step p { margin: 0; color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .split.rev > :first-child { order: 2; }
+    .promise { border: 1px solid rgba(79, 209, 139, .35); background: linear-gradient(180deg, rgba(79, 209, 139, .08), transparent); border-radius: 18px; padding: 28px; }
+    .promise ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    .promise li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; color: var(--muted); }
+    .promise li::before { content: "✓"; color: var(--good); font-weight: 800; }
+    .promise li b { color: var(--text); }
+    .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .dl .card { display: flex; flex-direction: column; gap: 12px; }
+    .dl h3 { font-size: 19px; }
+    .hash { font-family: var(--mono); font-size: 11.5px; color: var(--dim); word-break: break-all; }
+    .req { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .req .card { display: grid; grid-template-columns: 30px 1fr; gap: 12px; }
+    .req .card .tick { color: var(--accent); font-size: 18px; }
+    pre { background: #08090b; border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; overflow: auto; margin: 10px 0 0; }
+    pre code { font-size: 13px; color: #e6e6ee; }
+    .install { display: grid; gap: 28px; }
+    .install .row { display: grid; grid-template-columns: 1fr 1.05fr; gap: 36px; align-items: center; }
+    .install .row h3 { margin: 0 0 6px; font-size: 19px; }
+    .install .row p { margin: 0 0 8px; color: var(--muted); }
+    .install figure { margin: 0; }
+    figcaption { color: var(--dim); font-size: 12.5px; margin-top: 8px; }
+    .note { border-left: 3px solid var(--warn); background: rgba(242, 180, 76, .07); padding: 12px 16px; border-radius: 0 10px 10px 0; color: var(--muted); font-size: 15px; }
+    details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 650; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    summary::after { content: "+"; color: var(--dim); font-weight: 400; font-size: 20px; line-height: 1; }
+    details[open] summary::after { content: "–"; }
+    details p, details ul { color: var(--muted); margin: 10px 0 0; }
+    footer { border-top: 1px solid var(--line); padding: 34px 0 60px; color: var(--dim); font-size: 13.5px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; }
+    @media (max-width: 900px) {
+      .hero, .split, .install .row, .dl, .req { grid-template-columns: 1fr; }
+      .split.rev > :first-child { order: 0; }
+      .grid3 { grid-template-columns: 1fr; }
+      .navlinks { display: none; }
+      .hero { padding-top: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap"><nav>
+      <a class="brand" href="#"><img src="assets/icon-256.png" alt="" />JobPilot</a>
+      <div class="navlinks"><a href="#how">How it works</a><a href="#promise">Review-first</a><a href="#install">Install</a><a href="#faq">FAQ</a></div>
+      <a class="btn primary" href="#download">Download for Mac</a>
+    </nav></div>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <span class="eyebrow"><b>New</b> JobPilot <span class="ver" data-version>3.3</span> for Mac</span>
+        <h1>Tailored applications, written from <em>your real experience</em>.</h1>
+        <p class="lead">Paste a job link. JobPilot checks whether you fit, writes a one-page resume and a cover letter for that job from your own facts, fills in the application, and stops so you can read it and press Submit yourself.</p>
+        <div class="cta">
+          <a class="btn primary" href="#download">Download for Mac <small>free</small></a>
+          <a class="btn" href="#how">See how it works</a>
+        </div>
+        <div class="fine">macOS 13 or later · Apple silicon and Intel · needs a Claude Pro or Max subscription</div>
+      </div>
+      <div class="shot"><img src="assets/review.png" width="1380" height="900" alt="JobPilot's Review screen: a tailored one-page resume next to its recruiter-style critique, ready for review" /></div>
+    </div>
+
+    <section id="how">
+      <div class="wrap">
+        <h2>From a job link to a ready application</h2>
+        <p class="sub">JobPilot does the slow parts of applying, from the facts you give it once. It runs on your Mac and writes with Claude through your own Claude subscription.</p>
+        <div class="grid3">
+          <div class="card"><div class="icon">⌁</div><h3>Reads the posting</h3><p>Greenhouse, Lever, Ashby and Workday postings, or any job link. It pulls out the requirements, the stack and where the job is.</p></div>
+          <div class="card"><div class="icon">✓</div><h3>Checks your fit first</h3><p>Graduation windows, years of experience, seniority, and whether you can work in the job's country. A mismatch waits for your OK.</p></div>
+          <div class="card"><div class="icon">✎</div><h3>Writes the resume</h3><p>A one-page PDF for that job: your real titles, employers and dates, your own numbers, the posting's language where your facts back it.</p></div>
+          <div class="card"><div class="icon">✉</div><h3>Writes the cover letter</h3><p>Five short paragraphs about their product and your proof, then a strict recruiter-style critique and a revision before you see it.</p></div>
+          <div class="card"><div class="icon">⇥</div><h3>Fills the form</h3><p>Contact details, uploads, your saved answers for that country, and drafted answers you check (amber) before anything is sent.</p></div>
+          <div class="card"><div class="icon">◎</div><h3>Watches companies</h3><p>Pick companies; JobPilot checks their job boards every few hours and lists new postings that match your titles and places.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <h2>Set up once, from your current resume</h2>
+          <p class="sub">Drop your resume (PDF or Word). Claude reads it into a fact bank: every job, title, date, fact and number. You check each line before anything is written from it, untick numbers you can't stand behind, and mark rough ones as estimates.</p>
+          <p class="sub">Then tell it where you can work (work authorization and sponsorship are always yours to enter, never guessed) and which companies to watch. About five minutes.</p>
+        </div>
+        <div class="shot"><img src="assets/onboarding.png" width="1380" height="900" alt="Onboarding: checking the fact bank Claude read from a resume" loading="lazy" /></div>
+      </div>
+    </section>
+
+    <section id="promise">
+      <div class="wrap split rev">
+        <div class="shot"><img src="assets/form.png" width="1380" height="900" alt="An application form filled in by JobPilot and left for the user to submit" loading="lazy" /></div>
+        <div class="promise">
+          <h2>The review-first promise</h2>
+          <ul>
+            <li><span><b>Nothing is submitted for you.</b> JobPilot fills a form and stops. You read it and press Submit on the site.</span></li>
+            <li><span><b>Nothing is invented.</b> No employers, dates or titles you didn't have; no level words added; only your numbers. A number you marked as an estimate needs your OK on every application.</span></li>
+            <li><span><b>Legal questions are yours.</b> Work authorization, sponsorship, self-identification and pay come only from what you enter. Consent boxes, certifications and signatures are never touched.</span></li>
+            <li><span><b>No shortcuts.</b> No LinkedIn automation, no CAPTCHA solving, no mass-applying.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="download">
+      <div class="wrap">
+        <h2>Download</h2>
+        <p class="sub">Free. Pick the one for your Mac: Apple menu  → About This Mac → <b>Chip</b> says Apple M1, M2, M3, M4… (Apple silicon) or <b>Processor</b> says Intel.</p>
+        <div class="dl">
+          <div class="card">
+            <h3>Apple silicon</h3>
+            <p>M1, M2, M3, M4 and later.</p>
+            <a class="btn primary" href="https://github.com/Akshayan03/jobpilot/releases/latest/download/JobPilot-mac-arm64.dmg" data-asset="JobPilot-mac-arm64.dmg">Download for Apple silicon <small data-size></small></a>
+            <div class="hash" data-hash>SHA-256 in the release notes</div>
+          </div>
+          <div class="card">
+            <h3>Intel</h3>
+            <p>Macs with an Intel processor.</p>
+            <a class="btn" href="https://github.com/Akshayan03/jobpilot/releases/latest/download/JobPilot-mac-x64.dmg" data-asset="JobPilot-mac-x64.dmg">Download for Intel <small data-size></small></a>
+            <div class="hash" data-hash>SHA-256 in the release notes</div>
+          </div>
+        </div>
+        <p class="fine" style="margin-top:14px">Version <span data-version>3.3.0</span> · <a href="https://github.com/Akshayan03/jobpilot/releases">all releases and checksums</a> · Windows isn't available yet.</p>
+      </div>
+    </section>
+
+    <section id="requirements">
+      <div class="wrap">
+        <h2>What you need</h2>
+        <div class="req">
+          <div class="card"><span class="tick">✓</span><div><b>A Mac with macOS 13 Ventura or later</b><br /><span class="fine">Apple silicon or Intel.</span></div></div>
+          <div class="card"><span class="tick">✓</span><div><b>A Claude Pro or Max subscription</b><br /><span class="fine">JobPilot writes with Claude on your plan. There's no API key and nothing billed per use.</span></div></div>
+          <div class="card"><span class="tick">✓</span><div><b>Claude Code, installed and signed in</b><br /><span class="fine">In Terminal: <code>curl -fsSL https://claude.ai/install.sh | bash</code>, then <code>claude auth login</code>. JobPilot checks this when it opens and shows these steps if it's missing.</span></div></div>
+          <div class="card"><span class="tick">✓</span><div><b>Python 3 (usually already there)</b><br /><span class="fine">The resume PDFs are built with Python. If macOS offers to install the command line developer tools the first time, say yes (or run <code>xcode-select --install</code>).</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="wrap">
+        <h2>Install (and the one-time security step)</h2>
+        <p class="sub">JobPilot isn't notarized by Apple (that needs a paid developer account), so the first time you open it macOS asks you to confirm. You do this once; after that it opens like any app.</p>
+        <div class="install">
+          <div class="row">
+            <div><h3>1. Open the download and drag JobPilot to Applications</h3><p>Double-click <span class="mono">JobPilot-mac-….dmg</span>, then drag the JobPilot icon onto the Applications folder.</p></div>
+            <figure><img class="shot" src="assets/gk-dmg.png" alt="The JobPilot disk image: drag the app onto Applications" loading="lazy" /><figcaption>The disk image window.</figcaption></figure>
+          </div>
+          <div class="row">
+            <div><h3>2. Open it once, then click Done</h3><p>Double-click JobPilot in Applications. macOS says it couldn't verify the app. Click <b>Done</b> (not Move to Trash).</p></div>
+            <figure><img class="shot" src="assets/gk-blocked.png" alt="macOS dialog: JobPilot Not Opened. Apple could not verify JobPilot is free of malware. Buttons: Done, Move to Trash" loading="lazy" /><figcaption>Illustration of the macOS dialog; the wording varies a little by macOS version.</figcaption></figure>
+          </div>
+          <div class="row">
+            <div><h3>3. System Settings → Privacy &amp; Security → Open Anyway</h3><p>Open  → System Settings → <b>Privacy &amp; Security</b>, scroll down to <b>Security</b>, and next to “JobPilot was blocked to protect your Mac” click <b>Open Anyway</b>. Enter your Mac password, then click <b>Open Anyway</b> once more.</p>
+              <p class="fine">On macOS 14 and earlier you can instead Control-click (right-click) JobPilot in Applications, choose <b>Open</b>, then <b>Open</b>.</p></div>
+            <figure><img class="shot" src="assets/gk-settings.png" alt="System Settings, Privacy and Security: JobPilot was blocked to protect your Mac, with an Open Anyway button" loading="lazy" /><figcaption>Illustration of System Settings → Privacy &amp; Security.</figcaption></figure>
+          </div>
+          <div class="row">
+            <div><h3>4. Sign in to Claude Code, then set up</h3><p>If Claude Code isn't installed or signed in, JobPilot shows exactly what to run. Then it walks you through your resume, where you can work, and the companies to watch.</p></div>
+            <figure><img class="shot" src="assets/gate.png" alt="JobPilot's Claude Code check: how to install and sign in" loading="lazy" /><figcaption>JobPilot's own check, shown only when Claude Code needs attention.</figcaption></figure>
+          </div>
+          <p class="note">Prefer Terminal? After dragging it to Applications, this clears the download flag so macOS doesn't ask: <code>xattr -dr com.apple.quarantine /Applications/JobPilot.app</code>. Only do this for apps you trust, and check the SHA-256 first: <code>shasum -a 256 ~/Downloads/JobPilot-mac-*.dmg</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <h2>Questions</h2>
+        <details><summary>Where does my data go?</summary><p>Everything stays on your Mac, in <span class="mono">~/Library/Application Support/JobPilot</span>: your profile, answers, resumes, letters and applications. There's no JobPilot server, account or analytics. To write, JobPilot sends the relevant facts and the posting to Claude through Claude Code on your Mac, under your own Claude account and Anthropic's terms, the same as when you use Claude yourself. Job boards are read from their public APIs.</p></details>
+        <details><summary>Does it apply to jobs for me?</summary><p>No. It prepares each application and fills the form, then stops. You read every field (anything it drafted is highlighted), answer legal acknowledgements yourself, and press Submit on the company's site.</p></details>
+        <details><summary>Will it make things up on my resume?</summary><p>No. Titles, employers and dates are printed exactly as in your profile, numbers only as you wrote them, and a skill your facts don't back is flagged for you to confirm or remove. If a posting asks for something you don't have, it shows up as a gap, not as a claim.</p></details>
+        <details><summary>What does it cost?</summary><p>JobPilot is free. Its writing uses your Claude subscription's usage, like chatting with Claude does. A Pro plan is enough for a few applications a day; Max gives more room.</p></details>
+        <details><summary>Why does macOS warn me when I first open it?</summary><p>Apple notarization needs a paid developer account, which this hobby project doesn't have. The app is signed (ad hoc) but not notarized, so macOS asks you to confirm once. You can check the download against the SHA-256 on the release page.</p></details>
+        <details><summary>Which job sites work?</summary><p>Greenhouse, Lever, Ashby and Workday forms are filled directly; other sites get a generic fill you check. Postings from any site can be read by pasting the link (or the text). Company watching works for Greenhouse, Lever and Ashby boards.</p></details>
+        <details><summary>Windows? Updates?</summary><p>Mac only for now. To update, download the new version here and replace the app in Applications; your data stays where it is.</p></details>
+        <details><summary>How do I remove it?</summary><p>Drag JobPilot from Applications to the Trash. To remove your data too, delete <span class="mono">~/Library/Application Support/JobPilot</span>.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>JobPilot · © 2026 Akshayan03 · All rights reserved. Free to download and use.</span>
+      <span>Screenshots show a made-up demo profile. Not affiliated with Anthropic, Apple or any job board.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Latest release from the GitHub API: version, sizes and SHA-256 digests (the links above work without it).
+    fetch("https://api.github.com/repos/Akshayan03/jobpilot/releases/latest").then((r) => r.ok ? r.json() : null).then((rel) => {
+      if (!rel) return;
+      const v = (rel.tag_name || "").replace(/^v/, "");
+      if (v) document.querySelectorAll("[data-version]").forEach((e) => (e.textContent = v));
+      document.querySelectorAll("[data-asset]").forEach((a) => {
+        const asset = (rel.assets || []).find((x) => x.name === a.dataset.asset);
+        if (!asset) return;
+        a.href = asset.browser_download_url;
+        const size = a.querySelector("[data-size]");
+        if (size) size.textContent = `${Math.round(asset.size / 1e6)} MB`;
+        const hash = a.parentElement.querySelector("[data-hash]");
+        if (hash && asset.digest) hash.textContent = `SHA-256 ${asset.digest.replace(/^sha256:/, "")}`;
+      });
+    }).catch(() => {});
+  </script>
+</body>
+</html>
