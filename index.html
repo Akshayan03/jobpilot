@@ -116,7 +116,7 @@
   <main>
     <div class="wrap hero">
       <div>
-        <span class="eyebrow"><b>New</b> JobPilot <span class="ver" data-version>3.7.2</span> for Mac</span>
+        <span class="eyebrow"><b>New</b> JobPilot <span class="ver" data-version>3.7.3</span> for Mac</span>
         <h1>Tailored applications, written from <em>your real experience</em>.</h1>
         <p class="lead">Paste a job link. JobPilot checks whether you fit, writes a one-page resume and a cover letter for that job from your own facts, fills in the application, and stops so you can read it and press Submit yourself.</p>
         <div class="cta">
@@ -133,12 +133,12 @@
         <h2>From a job link to a ready application</h2>
         <p class="sub">JobPilot does the slow parts of applying, from the facts you give it once. It runs on your Mac and writes with Claude through your own Claude subscription.</p>
         <div class="grid3">
-          <div class="card"><div class="icon">⌁</div><h3>Reads the posting</h3><p>Greenhouse, Lever, Ashby and Workday postings, or any job link. It pulls out the requirements, the stack and where the job is.</p></div>
+          <div class="card"><div class="icon">⌁</div><h3>Reads the posting</h3><p>Greenhouse, Lever, Ashby, Workable, SmartRecruiters and Workday postings, or any job link. It pulls out the requirements, the stack and where the job is.</p></div>
           <div class="card"><div class="icon">✓</div><h3>Checks your fit first</h3><p>Graduation windows, years of experience, seniority, and whether you can work in the job's country. A mismatch waits for your OK.</p></div>
           <div class="card"><div class="icon">✎</div><h3>Writes the resume</h3><p>A one-page PDF for that job: your real titles, employers and dates, your own numbers, the posting's language where your facts back it.</p></div>
           <div class="card"><div class="icon">✉</div><h3>Writes the cover letter</h3><p>Five short paragraphs about their product and your proof, then a strict recruiter-style critique and a revision before you see it.</p></div>
           <div class="card"><div class="icon">⇥</div><h3>Fills the form</h3><p>Contact details, uploads, your saved answers for that country, and drafted answers you check (amber) before anything is sent.</p></div>
-          <div class="card"><div class="icon">◎</div><h3>Watches companies</h3><p>Pick companies; JobPilot checks their job boards every few hours and lists new postings that match your titles and places.</p></div>
+          <div class="card"><div class="icon">◎</div><h3>Watches companies</h3><p>Pick companies; JobPilot checks their job boards every few hours and lists new postings that match your titles and places. Filter them by remote, level, type of job, pay shown and more.</p></div>
         </div>
       </div>
     </section>
@@ -187,7 +187,7 @@
             <div class="hash" data-hash>SHA-256 in the release notes</div>
           </div>
         </div>
-        <p class="fine" style="margin-top:14px">Version <span data-version>3.7.2</span> for Apple silicon (Intel stays on 3.6.1 for now) · <a href="https://github.com/Akshayan03/jobpilot/releases">all releases and checksums</a> · Windows isn't available yet.</p>
+        <p class="fine" style="margin-top:14px">Version <span data-version>3.7.3</span> for Apple silicon (Intel stays on 3.6.1 for now) · <a href="https://github.com/Akshayan03/jobpilot/releases">all releases and checksums</a> · Windows isn't available yet.</p>
       </div>
     </section>
 
@@ -234,11 +234,11 @@
       <div class="wrap">
         <h2>Questions</h2>
         <details><summary>Where does my data go?</summary><p>Everything stays on your Mac, in <span class="mono">~/Library/Application Support/JobPilot</span>: your profile, answers, resumes, letters and applications. There's no JobPilot server, account or analytics. To write, JobPilot sends the relevant facts and the posting to Claude through Claude Code on your Mac, under your own Claude account and Anthropic's terms, the same as when you use Claude yourself. Job boards are read from their public APIs.</p></details>
-        <details><summary>Does it apply to jobs for me?</summary><p>Not unless you turn on Auto-submit. By default it prepares each application and fills the form, then stops: you read every field (anything it drafted is highlighted), answer legal acknowledgements yourself, and press Submit on the company's site. With Auto-submit on (Settings, after a consent step), it submits the applications that are ready, ticks their consent boxes, waits for each board's confirmation and keeps a screenshot of it: at most 10 a day, a few minutes apart, never the same role twice. It still never solves a CAPTCHA, uses LinkedIn, guesses your work authorization, sponsorship or self-identification, types a signature, pays or creates accounts; those wait for you.</p></details>
+        <details><summary>Does it apply to jobs for me?</summary><p>Not unless you turn on Auto-submit. By default it prepares each application and fills the form, then stops: you read every field (anything it drafted is highlighted), answer legal acknowledgements yourself, and press Submit on the company's site. With Auto-submit on (Settings, after a consent step), it submits the applications that are ready, ticks their consent boxes, waits for each board's confirmation and keeps a screenshot of it: at most 10 a day, a few minutes apart, never the same role twice. It still never solves a CAPTCHA, uses LinkedIn, guesses your work authorization, sponsorship or self-identification, types a signature, pays or creates accounts; those wait for you. When a site needs something only you can give (an account, or a security code it emailed you), the application moves to <b>Needs you</b> and says so, instead of being counted as sent.</p></details>
         <details><summary>Will it make things up on my resume?</summary><p>No. Titles, employers and dates are printed exactly as in your profile, numbers only as you wrote them, and a skill your facts don't back is flagged for you to confirm or remove. If a posting asks for something you don't have, it shows up as a gap, not as a claim.</p></details>
         <details><summary>What does it cost?</summary><p>JobPilot is free. Its writing uses your Claude subscription's usage, like chatting with Claude does. A Pro plan is enough for a few applications a day; Max gives more room.</p></details>
         <details><summary>Why does macOS warn me when I first open it?</summary><p>Apple notarization needs a paid developer account, which this hobby project doesn't have. The app is signed (ad hoc) but not notarized, so macOS asks you to confirm once. You can check the download against the SHA-256 on the release page.</p></details>
-        <details><summary>Which job sites work?</summary><p>Greenhouse, Lever, Ashby and Workday forms are filled directly; other sites get a generic fill you check. Postings from any site can be read by pasting the link (or the text). Company watching works for Greenhouse, Lever and Ashby boards.</p></details>
+        <details><summary>Which job sites work?</summary><p>Greenhouse, Lever, Ashby, Workable and SmartRecruiters are the sites JobPilot knows best: it fills their forms directly and, with Auto-submit on, waits for each site's own confirmation that the application was received. Other sites without a sign-in (Breezy, for example) get a general fill you check. Sites that need an account (Workday, Taleo, iCIMS, SuccessFactors, Oracle, Avature) are always yours to send: JobPilot gets the resume and letter ready and marks them <b>Apply yourself</b>, because it never creates accounts. Postings from any site can be read by pasting the link (or the text). Company watching works for Greenhouse, Lever, Ashby, Workable, SmartRecruiters, Recruitee and Workday boards.</p></details>
         <details><summary>Windows? Updates?</summary><p>Mac only for now. To update, download the new version here and replace the app in Applications; your data stays where it is.</p></details>
         <details><summary>How do I remove it?</summary><p>Drag JobPilot from Applications to the Trash. To remove your data too, delete <span class="mono">~/Library/Application Support/JobPilot</span>.</p></details>
       </div>
